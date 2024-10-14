@@ -1,6 +1,6 @@
 # Mobile-Application-545
 Project Name: Wake ME up
-By Davis Zhong, Aylin, Nicola <br>
+By Davis Zhong, Aylin, Nicola Mihai <br>
 Version #1 <br>
 <br>
 
@@ -38,6 +38,7 @@ The Minimum Viable Product (MVP) will focus on essential features: the ability t
 
 ### UI/UX Design
 (Call out important UI/UX components to have an MVP – does not have to be polished, but should keep the audience, purpose, and value prop in mind)
+
 
 ### Technical Architecture
 (What are the necessary components to support an MVP?  Data structures?  Storage considerations?  Web/cloud interactions?  Be sure to put in some thoughts as to how to measure your success here.  Call out dependencies on 3rd party services/APIs here, too)
