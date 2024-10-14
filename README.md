@@ -38,7 +38,7 @@ The Minimum Viable Product (MVP) will focus on essential features: the ability t
 
 ### UI/UX Design
 (Call out important UI/UX components to have an MVP – does not have to be polished, but should keep the audience, purpose, and value prop in mind)
-![home page](./HomePageSC.png "Title")
+![home page](./HomePageSC.png "Title") <br>
 ![open page](./OpenPageSC.png "Title")
 
 ### Technical Architecture
