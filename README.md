@@ -1,6 +1,6 @@
 # Mobile-Application-545
 Project Name: Wake ME up
-By Davis Zhong, Aylin Onalan, Nicola Mihai <br>
+By Davis Zhong, Aylin, Nicola <br>
 Version #1 <br>
 <br>
 
@@ -37,7 +37,7 @@ We propose a freemium model, offering basic alarm functionalities for free while
 The Minimum Viable Product (MVP) will focus on essential features: the ability to set alarms, play audio alerts through Bluetooth devices, and customize alert tones. Expected limitations include initial support for only specific audio formats and potential connectivity issues with some Bluetooth devices.
 
 ### UI/UX Design
-*(Call out important UI/UX components to have an MVP – does not have to be polished, but should keep the audience, purpose, and value prop in mind)*
+(Call out important UI/UX components to have an MVP – does not have to be polished, but should keep the audience, purpose, and value prop in mind)
 
 ### Technical Architecture
 *(What are the necessary components to support an MVP?  Data structures?  Storage considerations?  Web/cloud interactions?  Be sure to put in some thoughts as to how to measure your success here.  Call out dependencies on 3rd party services/APIs here, too)* <br>
