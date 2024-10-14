@@ -42,20 +42,22 @@ The Minimum Viable Product (MVP) will focus on essential features: the ability t
 ![open page](./OpenPageSC.png "Title")
 
 ### Technical Architecture
-(What are the necessary components to support an MVP?  Data structures?  Storage considerations?  Web/cloud interactions?  Be sure to put in some thoughts as to how to measure your success here.  Call out dependencies on 3rd party services/APIs here, too)
-Necessary components for the MVP include:
-Data Structures: Alarm configurations (time, sound, repeat settings).
-Storage Considerations: Local storage for user preferences and alarm data.
-Web/Cloud Interactions: Optional cloud storage for syncing alarms across devices.
-Dependencies: Use of native audio playback libraries and Bluetooth APIs.
-Most important and basic design for the MVP would be:
-Well designed timer that counts down from user’s specified amount of time
-Instructions for the user to already have a bluetooth device linked via their phone’s speaker system
-Well designed home page that has all of this setup
-Audio file playing that plays to system default speaker
-Local storage for application state and user preferences (volume, audio file)
-The MVP is successful if the timer counts down to zero from user input time and plays audio through connected bluetooth device
-How to measure our success:
+(What are the necessary components to support an MVP?  Data structures?  Storage considerations?  Web/cloud interactions?  Be sure to put in some thoughts as to how to measure your success here.  Call out dependencies on 3rd party services/APIs here, too) <br> <br>
+**Necessary components for the MVP include:**
+- **Data Structures:** Alarm configurations (time, sound, repeat settings).
+- **Storage Considerations:** Local storage for user preferences and alarm data.
+- **Web/Cloud Interactions:** Optional cloud storage for syncing alarms across devices.
+- **Dependencies:** Use of native audio playback libraries and Bluetooth APIs. <br> <br>
+
+**Most important and basic design for the MVP would be:** <br>
+- Well designed timer that counts down from user’s specified amount of time.
+- Instructions for the user to already have a bluetooth device linked via their phone’s speaker system.
+- Well designed home page that has all of this setup
+Audio file playing that plays to system default speaker.
+- Local storage for application state and user preferences (volume, audio file).
+- The MVP is successful if the timer counts down to zero from user input time and plays audio through connected bluetooth device. <br> <br>
+
+**How to measure our success:** <br>
 The big metric on success for us is reliability of the application (i.e. how often does it fail to alarm or fail to alarm through headphones). That number of failures should be as close to zero as possible because if it’s not then nobody will want to use the application. Having as low of an impact on device battery is also important as well as ensuring that our application is “clean” and does not cause the device to run out of memory. User retention is additionally an important metric. If users are downloading our application and only using it once then we have failed. Additionally, having consistent functionality between the two platforms is important for success. 
 
 ### Challenges and Open Questions
