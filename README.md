@@ -1,5 +1,5 @@
 # Mobile-Application-545
-Project Name: Wake ME up
+Project Name: Wake ME up <br>
 By Davis Zhong, Aylin, Nicola Mihai <br>
 Version #1 <br>
 <br>
