@@ -63,3 +63,7 @@ As for questions that require additional research or potential feedback from pee
 
 ## Initial Mockup
 
+![mock up](./images/MockUp.png "Mock Up")
+
+<br>
+
