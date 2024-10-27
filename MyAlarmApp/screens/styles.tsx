@@ -63,7 +63,7 @@ export const bt_card_styles = StyleSheet.create({
     },
 });
 
-export const alarm_card_styles = StyleSheet.create({
+export const timer_styles = StyleSheet.create({
     card: {
         backgroundColor: '#D9D9D9',
         borderRadius: 10,
@@ -84,13 +84,18 @@ export const alarm_card_styles = StyleSheet.create({
         backgroundColor: '#C0C0C0',
         padding: 10,
     },
-    button: {
+    timerButton: {
     backgroundColor: '#FF5733',
     padding: 12,
     borderRadius: 8,
   },
-  buttonText: {
+  controlButton: {
     color: '#FFD700',
     fontSize: 20,
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginTop: 20,
   },
 });

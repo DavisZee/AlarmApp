@@ -1,6 +1,6 @@
-import { Button, StyleSheet, Text, View } from 'react-native';
+import { Button, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import React, { useState } from 'react';
-import { styles, bt_card_styles, alarm_card_styles } from '../styles'; // import path for styles
+import { styles, bt_card_styles, timer_styles } from '../styles'; // import path for styles
 import Timer from '../../components/Timer'; 
 
 
@@ -34,9 +34,9 @@ const HomeScreen: React.FC = () => {
       </View>
       
       {/* Card component */}
-      <View style={alarm_card_styles.card}>
+      <View style={timer_styles.card}>
         {/* header */}
-        <View style={alarm_card_styles.cardBorder}>
+        <View style={timer_styles.cardBorder}>
         </View>
 
         {/* alarm body */}
@@ -45,26 +45,23 @@ const HomeScreen: React.FC = () => {
         </View>
         
         {/* footer */}
-        <View style={alarm_card_styles.cardBorder}>
+        <View style={timer_styles.cardBorder}>
         </View>
       </View>
 
       {/** Timer Control Buttons */}
-      <View style={but_styles.buttonContainer}>
-        <Button title="Start" onPress={startTimer} />
+      <View style={timer_styles.buttonContainer}>
+        {/* 
+        <TouchableOpacity>
+          <Text>Test</Text>
+        </TouchableOpacity>
+        */}
+        <Button title="Start" onPress={startTimer}/>
         <Button title="Pause" onPress={pauseTimer} />
         <Button title="Reset" onPress={resetTimer} />
       </View>
     </View>
   );
 };
-
-const but_styles = StyleSheet.create({
-  buttonContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    marginTop: 20,
-  },
-});
 
 export default HomeScreen;
