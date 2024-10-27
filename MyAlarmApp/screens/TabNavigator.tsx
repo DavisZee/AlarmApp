@@ -11,7 +11,7 @@ export default function TabNavigator() {
     <Tab.Navigator initialRouteName="Home" 
         screenOptions={{ 
             headerStyle: { backgroundColor: '#59F8BB' }, 
-            headerTintColor: '#fff', 
+            headerTintColor: '#000000', 
             tabBarStyle: { backgroundColor: '#59F8BB' }, // Tab bar background color
             tabBarActiveTintColor: '#E6A459', // Active tab text color
             tabBarInactiveTintColor: '#333', // Inactive tab text color

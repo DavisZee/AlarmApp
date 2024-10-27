@@ -49,7 +49,7 @@ const HomeScreen: React.FC = () => {
         </View>
       </View>
 
-      {/** place buttons here */}
+      {/** Timer Control Buttons */}
       <View style={but_styles.buttonContainer}>
         <Button title="Start" onPress={startTimer} />
         <Button title="Pause" onPress={pauseTimer} />

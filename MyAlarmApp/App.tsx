@@ -9,7 +9,7 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Start" screenOptions={{ headerStyle: { backgroundColor: '#59F8BB' }, headerTintColor: '#fff', }}>
+      <Stack.Navigator initialRouteName="Start" screenOptions={{ headerStyle: { backgroundColor: '#59F8BB' }, headerTintColor: '#000000', }}>
         <Stack.Screen name="Welcome" component={StartScreen} />
         <Stack.Screen name="Tabs" component={TabNavigator} options={{ headerShown: false }} />
       </Stack.Navigator>
