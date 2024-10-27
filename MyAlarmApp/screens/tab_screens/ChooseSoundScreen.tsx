@@ -1,10 +1,10 @@
 import { Button, StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 
-const SettingsScreen = () => {
+const ChooseSoundScreen = () => {
   return (
     <View style={styles.container}>
-      <Text>This is my Settings Screen</Text>
+      <Text>This is my Sound Options Screen</Text>
     </View>
   );
 };
@@ -17,4 +17,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SettingsScreen;
+export default ChooseSoundScreen;

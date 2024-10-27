@@ -3,6 +3,7 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeScreen from './tab_screens/HomeScreen';
 import SettingsScreen from './tab_screens/SettingsScreen'
+import ChooseSoundScreen from './tab_screens/ChooseSoundScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -18,6 +19,7 @@ export default function TabNavigator() {
         }}
     >
       <Tab.Screen name="Home" component={HomeScreen} />
+      <Tab.Screen name="Sound Options" component={ChooseSoundScreen} />
       <Tab.Screen name="Settings" component={SettingsScreen} />
     </Tab.Navigator>
   );
