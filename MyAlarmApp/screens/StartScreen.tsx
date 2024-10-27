@@ -1,25 +1,17 @@
-import { Button, StyleSheet, Text, View } from 'react-native';
+import { Button, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import React from 'react';
+//import styles from './styles'; // import path for styles
+import { styles } from './styles';
 
 const StartScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
-      <Text>Welcome to the App</Text>
-      {/* Button to navigate to TabNavigator */}
-      <Button
-        title="Next"
-        onPress={() => navigation.navigate('Tabs')} // Navigate to TabNavigator
-      />
+      <Text style={styles.titleText}>Welcome to the App</Text>
+      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Tabs')} >
+        <Text style={styles.buttonText}>Let’s Get Started</Text>
+      </TouchableOpacity>
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
 
 export default StartScreen;
