@@ -25,7 +25,7 @@ export const styles = StyleSheet.create({
   },
 });
 
-export const card_styles = StyleSheet.create({
+export const bt_card_styles = StyleSheet.create({
     card: {
         backgroundColor: '#D9D9D9',
         borderRadius: 10,
@@ -63,8 +63,28 @@ export const card_styles = StyleSheet.create({
     },
 });
 
-export const alarm_styles = StyleSheet.create({
-  button: {
+export const alarm_card_styles = StyleSheet.create({
+    card: {
+        backgroundColor: '#D9D9D9',
+        borderRadius: 10,
+        overflow: 'hidden', // ensures beveled edges by clipping child views
+        margin: 10,
+        width: '90%',
+        alignSelf: 'center',
+        elevation: 4, // adds shadow on android
+        shadowColor: '#000', // add shadow on iOS
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingTop: 20,
+    },
+    cardBorder: {
+        backgroundColor: '#C0C0C0',
+        padding: 10,
+    },
+    button: {
     backgroundColor: '#FF5733',
     padding: 12,
     borderRadius: 8,
