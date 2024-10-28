@@ -37,8 +37,8 @@ The Minimum Viable Product (MVP) will focus on essential features: the ability t
 
 ### UI/UX Design
 (Call out important UI/UX components to have an MVP – does not have to be polished, but should keep the audience, purpose, and value prop in mind) <br>
-![home page](./HomePageSC.png "Home Page")
-![open page](./OpenPageSC.png "Open Page")
+![home page](./images/HomePageSC.png "Home Page")
+![open page](./images/OpenPageSC.png "Open Page")
 
 ### Technical Architecture
 (What are the necessary components to support an MVP?  Data structures?  Storage considerations?  Web/cloud interactions?  Be sure to put in some thoughts as to how to measure your success here.  Call out dependencies on 3rd party services/APIs here, too) <br> <br>
@@ -59,4 +59,94 @@ Audio file playing that plays to system default speaker.
 ### Challenges and Open Questions
 *Identify technical challenges that may come up (e.g. hardware limitations, access to data/services, performance issues, etc.) and propose some solutions to the identified challenges.  Also include questions on matters that you are unsure/unclear about that requires feedback from peers, users, or additional research.* <br>
 One of the issues that we will likely encounter has to do with cross platform development as a whole and more specifically when we attempt to run the app on iOS while we are doing development exclusively on Windows. Necessary tools for iOS such as Xcode are only available for macOS so at some point we will need to experiment with the possibility of a virtual machine or emulator. One of our team members has access to an older mac that we could potentially try using, however that is an untested pathway and could end up not working. A third potential solution is to use one of the iMacs available in the computer science graduate lab, however, those will likely come with their own limitations and challenges regarding necessary software installation. Permissions for accessing the phone’s default audio system will also present a challenge. Especially because of our intent to develop cross platform. differences between iOS and Android systems and how they expect permissions to be requested could cause errors. Using react native libraries like react-native-permissions can help manage permissions across the two platforms more consistently. Another challenge we are likely to have is knowing when a bluetooth device is connected to the system. We need to know this as our alarms should only ring through headphones and not the phone’s main speakers. This will be different between the two systems and we will need to handle both appropriately. We will need to detect bluetooth connection events and also figure out how to route audio properly so it is only audible through headphones. Data storage will also be a challenge that is made more difficult because of the difference between iOs and Android. For credentials we could use something like react-native-keychain as it is cross platform compatible and uses encryption. SQLite Databases are supported within react native and are cross platform compatible as well as being capable of supporting more storage. Dependencies will also be a challenge especially for us developing in a group. React native has you add dependencies through the command line and we should track these in comments at the top of our code. Finally, developing this application in a team will present its own set of challenges. We believe these can be solved by having frequent meeting where we assign work and discuss any problems we are having. Obviously we will also be using a source code repository to track changes to aid in our workflow. Finally, setting expectations of each member and what work they are going to be doing. 
-As for questions that require additional research or potential feedback from peers, we are curious as to if they would be interested in our application having an account associated with it so that alarms would be saved. Additionally, if we were to use the cloud for such a feature, how would we manage this in our cross platform application? This will require additional research. We also have the question of how multiple bluetooth device playback would work? Is that something that is possible cross platform? And for our peers, is that a feature that would even be desirable? We also need to do more research on how to implement this application to run in the background since it’s an alarm application that would likely be beneficial. 
+As for questions that require additional research or potential feedback from peers, we are curious as to if they would be interested in our application having an account associated with it so that alarms would be saved. Additionally, if we were to use the cloud for such a feature, how would we manage this in our cross platform application? This will require additional research. We also have the question of how multiple bluetooth device playback would work? Is that something that is possible cross platform? And for our peers, is that a feature that would even be desirable? We also need to do more research on how to implement this application to run in the background since it’s an alarm application that would likely be beneficial.
+
+## Initial Mockup
+
+![mock up](./images/MockUp.png "Mock Up")
+
+<br>
+
+The end-to-end user experience for the personal alarm system begins when the user opens the app, where they are greeted with a clean, responsive interface. The first step is connecting to a Bluetooth device, which is central to the app's value proposition of providing personal alarms through headphones to avoid disturbing others. The process of connecting is seamless, with clear feedback indicating a successful connection. Next, the user sets a timer using an intuitive time picker, ensuring that input is straightforward and error-free. Upon starting the timer, visual or audio feedback confirms that it is running, with the remaining time clearly displayed on the screen. If desired, the user can opt to repeat the timer for recurring alarms, with settings that are easy to toggle. When the timer reaches zero, the alarm goes off through the connected Bluetooth device, delivering the alarm sound directly to the user’s headphones. The entire flow prioritizes simplicity, focusing on delivering value by ensuring reliable and non-intrusive alarms, aligning with clear success criteria such as fast app performance, smooth Bluetooth connectivity, and customizable alarm settings.
+
+## Initial Prototype
+
+**Necessary Features for Minimum Viable Product (MVP):**
+
+*Alarm Creation and Management*
+- User should be able to set alarm with a customizable time 
+- User should be able to enable or disable alarm
+
+*Alarm Notification and Sound*
+- Application plays sound when alarm goes off
+- Ensure sound only plays through connected wireless headphones
+- Dismiss alarm option for users
+
+*User Settings*
+- Configure alarm volume
+- Manage general app settings, such as enabling/disabling app settings
+
+*User Interface*
+- Simple and intuitive UI for setting alarms
+- List of recently used alarms
+- Timer-based view for upcoming alarm
+
+*Persistent Storage*
+- Save alarms locally so they remain active after the application restarts
+- Save user preferences, including alarm volume
+
+*Background Operation*
+- Ensure alarm goes off even if app is in the background
+- Preserve application state when resumed
+
+**Task Breakdown**
+*Alarm Creation and Management*
+- Build a form to set alarm time
+- Create a list view for recent alarms
+- Enable toggling for activating/deactivating alarm
+
+*Alarm Notification and Sound*
+- Set up the notification system with sound alerts.
+- Implement snooze and dismiss actions.
+- Test sound output to ensure it plays only through wireless headphones.
+
+*User Interface*
+- Design and develop an intuitive alarm setup UI.
+- Display a list of recent alarms, with options to edit or delete.
+- Add visual indicators for active/inactive alarm.
+
+*Persistent Storage*
+- Implement local storage for alarms 
+- Ensure saved and recent alarms load upon application starting
+
+*Background Operation*
+- Implement background tasks to ensure alarms function when the application is closed
+- Maintain alarm state upon application being resumed
+
+
+**Mapping between features and value(s) to be delivered by your app (justification)**
+
+*Alarm Creation and Management*
+Value Delivered: Customization and Usability
+Justification: Allowing users to set multiple alarms with custom times, names, and repeat options adds flexibility and convenience, catering to varied schedules and routines. This also enables a highly tailored user experience, letting users personalize each alarm to suit their needs.
+
+*Alarm Notification and Sound (Bluetooth Headphones Only)*
+Value Delivered: Discreetness and User Control
+Justification: Ensuring the alarm only plays through bluetooth headphones is a unique feature that respects user privacy and minimizes disturbances to those around them. This could be especially valuable in shared or public spaces where users want private reminders or alarms.
+
+*User Settings*
+Value Delivered: Enhanced User Experience and Personalization
+Justification: Offering settings like custom alarm sounds, volume control, and notification preferences allows users to fine-tune the app to their liking. This enhances satisfaction by giving control over how loud or soft the alarms are and aligning them with personal preferences.
+
+*User Interface (UI)*
+Value Delivered: Ease of Use and Clarity
+Justification: An intuitive and visually clear interface ensures that users can quickly set up, view, and manage alarms without confusion. A simple, well-organized UI encourages consistent use and makes the app accessible to all users, including those who are less tech-savvy.
+*
+*Persistent Storage*
+Value Delivered: Reliability and Consistency
+Justification: Saving alarms and user settings locally ensures that alarms remain set and preferences stay intact, even after the app or device restarts. This reliability is crucial for any alarm app, as users need assurance that their alarms will function consistently over time.
+
+*Background Operation*
+Value Delivered: Dependability
+Justification: Background operation ensures that alarms go off even if the app isn’t actively open, which is essential for alarms to be reliable. The application is able to provide a seamless experience, preserving the 
+application's state and enhancing its utility as a daily-use app that can be left running without needing constant user intervention.
