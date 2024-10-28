@@ -1,6 +1,6 @@
-import { Button, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { Button, TextInput, Text, View, TouchableOpacity } from 'react-native';
 import React, { useState } from 'react';
-import { styles, bt_card_styles, timer_styles, timer_button_styles } from '../styles'; // import path for styles
+import { styles, bt_card_styles, timer_styles, timer_button_styles, timer_comp_styles } from '../styles'; // import path for styles
 import Timer from '../../components/Timer'; 
 
 
@@ -73,6 +73,8 @@ const HomeScreen: React.FC = () => {
         <Button title="Pause" onPress={pauseTimer} />
         <Button title="Reset" onPress={resetTimer} />
       </View>
+      <View><Text style={timer_comp_styles.statusText}>Status: {isRunning ? 'Running' : 'Paused'}</Text></View>
+      
     </View>
   );
 };

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
-
+import { timer_comp_styles } from '../screens/styles';
 
 interface TimerProps {
     time: number; // accept time as a prop
@@ -60,10 +60,11 @@ const Timer: React.FC<TimerProps> = ( {time, isRunning, setIsRunning, setTime} )
     };
 
     return (
-        <View style={styles.timerContainer}>
-            <Text style={styles.timerText}>{formatTime(time)}</Text>
-            <Text style={styles.statusText}>{isRunning ? 'Running' : 'Paused'}</Text>
-            {/** 
+        <View style={timer_comp_styles.timerContainer}>
+            <Text style={timer_comp_styles.timerText}>{formatTime(time)}</Text>
+            
+            {/**
+            <Text style={timer_comp_styles.statusText}>{isRunning ? 'Running' : 'Paused'}</Text>
             <Button title="Start" onPress={startTimer} />
             <Button title="Pause" onPress={pauseTimer} />
             <Button title="Reset" onPress={resetTimer} />
@@ -72,20 +73,5 @@ const Timer: React.FC<TimerProps> = ( {time, isRunning, setIsRunning, setTime} )
         </View>
     );
 };
-
-const styles = StyleSheet.create({
-    timerContainer: {
-        alignItems: 'center',
-        margin: 20,
-    },
-    timerText: {
-        fontSize: 48,
-        marginBottom: 20,
-    },
-    statusText: {
-        fontSize: 24,
-        color: 'gray',
-    },
-});
 
 export default Timer;
