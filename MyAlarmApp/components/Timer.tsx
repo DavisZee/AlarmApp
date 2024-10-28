@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Button, StyleSheet } from 'react-native';
+import { View, Text } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Audio } from 'expo-av';
 import { timer_comp_styles } from '../screens/styles';
 
 interface TimerProps {
@@ -9,16 +11,39 @@ interface TimerProps {
     setTime: React.Dispatch<React.SetStateAction<number>>; // function to set time
 }
 
-
-const Timer: React.FC<TimerProps> = ( {time, isRunning, setIsRunning, setTime} ) => {
-    // testing input value
-    //let input = 3;
-
-    //const [time, setTime] = useState(input); // time in seconds starts at 10 seconds
-    //const [isRunning, setIsRunning] = useState(false);
+const Timer: React.FC<TimerProps> = ({ time, isRunning, setIsRunning, setTime }) => {
+    const [sound, setSound] = useState<Audio.Sound | null>(null); // State to hold sound instance
 
     useEffect(() => {
         let interval: NodeJS.Timeout | undefined;
+
+        const playSound = async () => {
+            try {
+                const identifier = await AsyncStorage.getItem("userRingtonePreference");
+                console.log('Retrieved sound identifier:', identifier); // Log the identifier
+
+                // Temporarily hardcode the paths directly
+                let soundFile;
+                if (identifier === 'alarmSound1') {
+                    soundFile = require('../assets/alarmTestFile.mp3');
+                } else if (identifier === 'alarmSound2') {
+                    soundFile = require('../assets/alarmTestFile2.mp3');
+                } else if (identifier === 'alarmSound3') {
+                    soundFile = require('../assets/alarmTestFile3.mp3');
+                } else {
+                    console.error('Sound identifier not found or not set:', identifier);
+                    return;
+                }
+
+                // Play the sound if a valid sound file is found
+                const { sound: playbackObject } = await Audio.Sound.createAsync(soundFile);
+                setSound(playbackObject);
+                console.log("THis is what is playing", soundFile);
+                await playbackObject.playAsync();
+            } catch (error) {
+                console.error('Error retrieving sound path from AsyncStorage or playing sound', error);
+            }
+        };
 
         if (isRunning && time > 0) {
             interval = setInterval(() => {
@@ -26,32 +51,27 @@ const Timer: React.FC<TimerProps> = ( {time, isRunning, setIsRunning, setTime} )
                     if (prevTime <= 1) {
                         clearInterval(interval); // clear interval when time reaches 0
                         setIsRunning(false); // stop timer
-                        return 0;// set time to 0
+                        playSound(); // Play sound when timer reaches 0
+                        return 0; // set time to 0
                     }
-                return prevTime - 1; 
-            });
+                    return prevTime - 1;
+                });
             }, 1000);
         } else if (!isRunning && time !== 0) {
             clearInterval(interval);
         }
-        
+
         return () => {
             if (interval) {
                 clearInterval(interval);
             }
+            // Unload the sound when the component unmounts
+            if (sound) {
+                sound.unloadAsync();
+            }
         };
     }, [isRunning, time, setIsRunning, setTime]);
 
-    
-
-    /*
-    const startTimer = () => setIsRunning(true);
-    const pauseTimer = () => setIsRunning(false);
-    const resetTimer = () => {
-        setIsRunning(false);
-        setTime(input);
-    };
-    */
     const formatTime = (seconds: number) => {
         const hours = Math.floor(seconds / 3600);
         const minutes = Math.floor((seconds % 3600) / 60);
@@ -62,14 +82,6 @@ const Timer: React.FC<TimerProps> = ( {time, isRunning, setIsRunning, setTime} )
     return (
         <View style={timer_comp_styles.timerContainer}>
             <Text style={timer_comp_styles.timerText}>{formatTime(time)}</Text>
-            
-            {/**
-            <Text style={timer_comp_styles.statusText}>{isRunning ? 'Running' : 'Paused'}</Text>
-            <Button title="Start" onPress={startTimer} />
-            <Button title="Pause" onPress={pauseTimer} />
-            <Button title="Reset" onPress={resetTimer} />
-            */}
-            
         </View>
     );
 };
