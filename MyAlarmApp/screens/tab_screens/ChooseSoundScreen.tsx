@@ -1,6 +1,5 @@
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import React from 'react';
 
 // Map identifiers to actual sound files using require
