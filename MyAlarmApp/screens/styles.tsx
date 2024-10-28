@@ -99,3 +99,38 @@ export const timer_styles = StyleSheet.create({
     marginTop: 20,
   },
 });
+
+export const timer_button_styles = StyleSheet.create({
+  tri_up_button: {
+    width: 0,
+    height: 0,
+    borderLeftWidth: 15, // size adjustments
+    borderRightWidth: 15,
+    borderBottomWidth: 25,
+    borderLeftColor: 'transparent',
+    borderRightColor: 'transparent',
+    borderBottomColor: '#000000', // color of triangle
+    marginHorizontal: 10, // spacing between buttons
+  },
+  tri_down_button: {
+    width: 0,
+    height: 0,
+    borderLeftWidth: 15, // size adjustments
+    borderRightWidth: 15,
+    borderTopWidth: 25,
+    borderLeftColor: 'transparent',
+    borderRightColor: 'transparent',
+    borderTopColor: '#000000', // color of triangle
+    marginHorizontal: 10, // spacing between buttons
+  }, 
+  triangleContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    marginBottom: 10, // spacing from the timer below
+  },
+  button_border: {
+    backgroundColor: 'transparent',
+    padding: 10,
+},
+});
