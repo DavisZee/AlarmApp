@@ -68,3 +68,85 @@ As for questions that require additional research or potential feedback from pee
 <br>
 
 The end-to-end user experience for the personal alarm system begins when the user opens the app, where they are greeted with a clean, responsive interface. The first step is connecting to a Bluetooth device, which is central to the app's value proposition of providing personal alarms through headphones to avoid disturbing others. The process of connecting is seamless, with clear feedback indicating a successful connection. Next, the user sets a timer using an intuitive time picker, ensuring that input is straightforward and error-free. Upon starting the timer, visual or audio feedback confirms that it is running, with the remaining time clearly displayed on the screen. If desired, the user can opt to repeat the timer for recurring alarms, with settings that are easy to toggle. When the timer reaches zero, the alarm goes off through the connected Bluetooth device, delivering the alarm sound directly to the user’s headphones. The entire flow prioritizes simplicity, focusing on delivering value by ensuring reliable and non-intrusive alarms, aligning with clear success criteria such as fast app performance, smooth Bluetooth connectivity, and customizable alarm settings.
+
+## Initial Prototype
+
+**Necessary Features for Minimum Viable Product (MVP):**
+
+*Alarm Creation and Management*
+- User should be able to set alarm with a customizable time 
+- User should be able to enable or disable alarm
+
+*Alarm Notification and Sound*
+- Application plays sound when alarm goes off
+- Ensure sound only plays through connected wireless headphones
+- Dismiss alarm option for users
+
+*User Settings*
+- Configure alarm volume
+- Manage general app settings, such as enabling/disabling app settings
+
+*User Interface*
+- Simple and intuitive UI for setting alarms
+- List of recently used alarms
+- Timer-based view for upcoming alarm
+
+*Persistent Storage*
+- Save alarms locally so they remain active after the application restarts
+- Save user preferences, including alarm volume
+
+*Background Operation*
+- Ensure alarm goes off even if app is in the background
+- Preserve application state when resumed
+
+**Task Breakdown**
+*Alarm Creation and Management*
+- Build a form to set alarm time
+- Create a list view for recent alarms
+- Enable toggling for activating/deactivating alarm
+
+*Alarm Notification and Sound*
+- Set up the notification system with sound alerts.
+- Implement snooze and dismiss actions.
+- Test sound output to ensure it plays only through wireless headphones.
+
+*User Interface*
+- Design and develop an intuitive alarm setup UI.
+- Display a list of recent alarms, with options to edit or delete.
+- Add visual indicators for active/inactive alarm.
+
+*Persistent Storage*
+- Implement local storage for alarms 
+- Ensure saved and recent alarms load upon application starting
+
+*Background Operation*
+- Implement background tasks to ensure alarms function when the application is closed
+- Maintain alarm state upon application being resumed
+
+
+**Mapping between features and value(s) to be delivered by your app (justification)**
+
+*Alarm Creation and Management*
+Value Delivered: Customization and Usability
+Justification: Allowing users to set multiple alarms with custom times, names, and repeat options adds flexibility and convenience, catering to varied schedules and routines. This also enables a highly tailored user experience, letting users personalize each alarm to suit their needs.
+
+*Alarm Notification and Sound (Bluetooth Headphones Only)*
+Value Delivered: Discreetness and User Control
+Justification: Ensuring the alarm only plays through bluetooth headphones is a unique feature that respects user privacy and minimizes disturbances to those around them. This could be especially valuable in shared or public spaces where users want private reminders or alarms.
+
+*User Settings*
+Value Delivered: Enhanced User Experience and Personalization
+Justification: Offering settings like custom alarm sounds, volume control, and notification preferences allows users to fine-tune the app to their liking. This enhances satisfaction by giving control over how loud or soft the alarms are and aligning them with personal preferences.
+
+*User Interface (UI)*
+Value Delivered: Ease of Use and Clarity
+Justification: An intuitive and visually clear interface ensures that users can quickly set up, view, and manage alarms without confusion. A simple, well-organized UI encourages consistent use and makes the app accessible to all users, including those who are less tech-savvy.
+*
+*Persistent Storage*
+Value Delivered: Reliability and Consistency
+Justification: Saving alarms and user settings locally ensures that alarms remain set and preferences stay intact, even after the app or device restarts. This reliability is crucial for any alarm app, as users need assurance that their alarms will function consistently over time.
+
+*Background Operation*
+Value Delivered: Dependability
+Justification: Background operation ensures that alarms go off even if the app isn’t actively open, which is essential for alarms to be reliable. The application is able to provide a seamless experience, preserving the 
+application's state and enhancing its utility as a daily-use app that can be left running without needing constant user intervention.

@@ -1,9 +1,41 @@
 import { Button, StyleSheet, Text, View } from 'react-native';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Slider from '@react-native-community/slider';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const SettingsScreen = () => {
   const [volume, setVolume] = useState(0.5); // Initial volume set to 0.5 (50%)
+
+  // Function to load volume from AsyncStorage
+  const loadVolume = async () => {
+    try {
+      const storedVolume = await AsyncStorage.getItem('volume');
+      if (storedVolume !== null) {
+        setVolume(parseFloat(storedVolume)); // Parse the stored value and set it to the state
+      }
+    } catch (error) {
+      console.error('Failed to load volume from AsyncStorage', error);
+    }
+  };
+
+  // Function to save volume to AsyncStorage
+  const saveVolume = async (value: number) => {
+    try {
+      await AsyncStorage.setItem('volume', value.toString()); // Store the volume as a string
+    } catch (error) {
+      console.error('Failed to save volume to AsyncStorage', error);
+    }
+  };
+
+  // Load volume when the component mounts
+  useEffect(() => {
+    loadVolume();
+  }, []);
+
+  // Save volume whenever it changes
+  useEffect(() => {
+    saveVolume(volume);
+  }, [volume]);
 
   return (
     <View style={styles.container}>
