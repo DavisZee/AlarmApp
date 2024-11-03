@@ -17,7 +17,9 @@ Please note that this is my personal setup and what has worked for me, there may
 - yarn add @react-native-community/slider
 - yarn add @react-navigation/bottom-tabs
 - yarn add @react-navigation/bottom-tabs
-- react-native-async-storage/async-storage
+- yarn add @react-native-async-storage/async-storage
+- yarn add react-native-sound
+- yarn add expo-av
 
 ## Build and Execution
 - yarn start
