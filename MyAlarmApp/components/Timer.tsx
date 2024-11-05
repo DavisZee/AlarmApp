@@ -4,15 +4,27 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Audio } from 'expo-av';
 import { timer_comp_styles } from '../screens/styles';
 
+// Import sound files at the top
+import alarmTestFile from '../assets/alarmTestFile.mp3';
+import alarmTestFile2 from '../assets/alarmTestFile2.mp3';
+import alarmTestFile3 from '../assets/alarmTestFile3.mp3';
+
+// Define sound mappings outside of playSound function
+const soundMappings: { [key: string]: any } = {
+    alarmSound1: alarmTestFile,
+    alarmSound2: alarmTestFile2,
+    alarmSound3: alarmTestFile3,
+};
+
 interface TimerProps {
-    time: number; // accept time as a prop
+    time: number;
     isRunning: boolean;
-    setIsRunning: React.Dispatch<React.SetStateAction<boolean>>; // function to set running state
-    setTime: React.Dispatch<React.SetStateAction<number>>; // function to set time
+    setIsRunning: React.Dispatch<React.SetStateAction<boolean>>;
+    setTime: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const Timer: React.FC<TimerProps> = ({ time, isRunning, setIsRunning, setTime }) => {
-    const [sound, setSound] = useState<Audio.Sound | null>(null); // State to hold sound instance
+    const [sound, setSound] = useState<Audio.Sound | null>(null);
 
     useEffect(() => {
         let interval: NodeJS.Timeout | undefined;
@@ -20,28 +32,20 @@ const Timer: React.FC<TimerProps> = ({ time, isRunning, setIsRunning, setTime })
         const playSound = async () => {
             try {
                 const identifier = await AsyncStorage.getItem("userRingtonePreference");
-                console.log('Retrieved sound identifier:', identifier); // Log the identifier
+                console.log('Retrieved sound identifier:', identifier);
 
-                // Temporarily hardcode the paths directly
-                let soundFile;
-                if (identifier === 'alarmSound1') {
-                    soundFile = require('../assets/alarmTestFile.mp3');
-                } else if (identifier === 'alarmSound2') {
-                    soundFile = require('../assets/alarmTestFile2.mp3');
-                } else if (identifier === 'alarmSound3') {
-                    soundFile = require('../assets/alarmTestFile3.mp3');
+                if (identifier && soundMappings[identifier]) {
+                    const { sound: playbackObject } = await Audio.Sound.createAsync(
+                        soundMappings[identifier]
+                    );
+                    setSound(playbackObject);
+                    await playbackObject.playAsync();
                 } else {
-                    console.error('Sound identifier not found or not set:', identifier);
-                    return;
+                    console.error('Invalid or undefined sound identifier:', identifier);
+                    console.log('Available identifiers:', Object.keys(soundMappings));
                 }
-
-                // Play the sound if a valid sound file is found
-                const { sound: playbackObject } = await Audio.Sound.createAsync(soundFile);
-                setSound(playbackObject);
-                console.log("THis is what is playing", soundFile);
-                await playbackObject.playAsync();
             } catch (error) {
-                console.error('Error retrieving sound path from AsyncStorage or playing sound', error);
+                console.error('Error retrieving sound preference from AsyncStorage', error);
             }
         };
 
@@ -49,10 +53,10 @@ const Timer: React.FC<TimerProps> = ({ time, isRunning, setIsRunning, setTime })
             interval = setInterval(() => {
                 setTime(prevTime => {
                     if (prevTime <= 1) {
-                        clearInterval(interval); // clear interval when time reaches 0
-                        setIsRunning(false); // stop timer
-                        playSound(); // Play sound when timer reaches 0
-                        return 0; // set time to 0
+                        clearInterval(interval);
+                        setIsRunning(false);
+                        playSound();
+                        return 0;
                     }
                     return prevTime - 1;
                 });
@@ -62,13 +66,8 @@ const Timer: React.FC<TimerProps> = ({ time, isRunning, setIsRunning, setTime })
         }
 
         return () => {
-            if (interval) {
-                clearInterval(interval);
-            }
-            // Unload the sound when the component unmounts
-            if (sound) {
-                sound.unloadAsync();
-            }
+            if (interval) clearInterval(interval);
+            if (sound) sound.unloadAsync();
         };
     }, [isRunning, time, setIsRunning, setTime]);
 
