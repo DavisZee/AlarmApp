@@ -15,7 +15,9 @@ const HomeScreen: React.FC = () => {
   const stopSoundRef = useRef<(() => void) | null>(null);
 
   const startTimer = () => {
-    setTime(hours * 3600 + minutes * 60 + seconds); // Set initial time in seconds
+    if (!isRunning && time === 0) { // Only reset if timer has finished
+      setTime(hours * 3600 + minutes * 60 + seconds); // Set initial time in seconds
+    }
     setIsRunning(true);
   };
 
