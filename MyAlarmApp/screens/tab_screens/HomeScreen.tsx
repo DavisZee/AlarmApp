@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import Timer from '../../components/Timer';
@@ -8,11 +8,16 @@ const HomeScreen: React.FC = () => {
   const [hours, setHours] = useState(0);
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
-  const [time, setTime] = useState(hours * 3600 + minutes * 60 + seconds); // initial timer in seconds
+  const [time, setTime] = useState(0); // Initial timer value in seconds
   const [isRunning, setIsRunning] = useState(false);
 
   // Use ref to store the stop sound function
   const stopSoundRef = useRef<(() => void) | null>(null);
+
+  // Update `time` whenever `hours`, `minutes`, or `seconds` change
+  useEffect(() => {
+    setTime(hours * 3600 + minutes * 60 + seconds);
+  }, [hours, minutes, seconds]);
 
   const startTimer = () => {
     if (!isRunning && time === 0) { // Only reset if timer has finished
