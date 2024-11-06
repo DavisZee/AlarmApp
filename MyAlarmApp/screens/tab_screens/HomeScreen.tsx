@@ -2,49 +2,68 @@ import React, { useState, useRef, useEffect } from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import Timer from '../../components/Timer';
-import { styles as importedStyles, bt_card_styles, timer_styles, timer_comp_styles } from '../styles';
+import { styles as importedStyles } from '../styles';
 
 const HomeScreen: React.FC = () => {
   const [hours, setHours] = useState(0);
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
-  const [initialTime, setInitialTime] = useState(0); // Store initial time in seconds based on pickers
-  const [time, setTime] = useState(0); // Actual timer countdown value in seconds
-  const [isRunning, setIsRunning] = useState(false);
 
-  // Use ref to store the stop sound function
+  const [initialTime, setInitialTime] = useState(0);
+  const [time, setTime] = useState(0);
+  const [isRunning, setIsRunning] = useState(false);
+  const [wasPaused, setWasPaused] = useState(false);
+
   const stopSoundRef = useRef<(() => void) | null>(null);
 
-  // Update `initialTime` whenever hours, minutes, or seconds change
   useEffect(() => {
     const newInitialTime = hours * 3600 + minutes * 60 + seconds;
     setInitialTime(newInitialTime);
 
-    // Update `time` if the timer is not currently running
-    if (!isRunning) {
+    if (!isRunning && !wasPaused) {
       setTime(newInitialTime);
     }
-  }, [hours, minutes, seconds, isRunning]);
+  }, [hours, minutes, seconds, isRunning, wasPaused]);
 
-  const startTimer = () => {
-    if (!isRunning && time === 0) { 
-      // Only set time to initialTime if the timer has not started or has been reset
-      setTime(initialTime);
+  const handlePickerChange = (
+    value: number,
+    type: 'hours' | 'minutes' | 'seconds'
+  ) => {
+    console.log(`Picker selection made - ${type}: ${value}`);
+    
+    if (type === 'hours') {
+      setHours(value);
+    } else if (type === 'minutes') {
+      setMinutes(value);
+    } else if (type === 'seconds') {
+      setSeconds(value);
     }
-    setIsRunning(true); // Start or resume the timer
   };
 
-  const pauseTimer = () => setIsRunning(false);
+  const startTimer = () => {
+    if (!isRunning) {
+      if (!wasPaused) {
+        setTime(initialTime);
+      }
+      setIsRunning(true);
+      setWasPaused(false);
+    }
+  };
+
+  const pauseTimer = () => {
+    setIsRunning(false);
+    setWasPaused(true);
+  };
 
   const resetTimer = () => {
     setIsRunning(false);
-    setTime(initialTime); // Reset to selected values
+    setWasPaused(false);
+    setTime(initialTime);
     if (stopSoundRef.current) {
-      stopSoundRef.current(); // Stop the sound if it's playing
+      stopSoundRef.current();
     }
   };
 
-  // Function to set the stop sound function
   const setStopSoundFunction = (stopFunction: () => void) => {
     stopSoundRef.current = stopFunction;
   };
@@ -59,7 +78,7 @@ const HomeScreen: React.FC = () => {
           <Text>Hours</Text>
           <Picker
             selectedValue={hours}
-            onValueChange={(value) => setHours(value)}
+            onValueChange={(value) => handlePickerChange(value, 'hours')}
             style={{ width: 100 }}
           >
             {[...Array(24).keys()].map((i) => (
@@ -72,7 +91,7 @@ const HomeScreen: React.FC = () => {
           <Text>Minutes</Text>
           <Picker
             selectedValue={minutes}
-            onValueChange={(value) => setMinutes(value)}
+            onValueChange={(value) => handlePickerChange(value, 'minutes')}
             style={{ width: 100 }}
           >
             {[...Array(60).keys()].map((i) => (
@@ -85,7 +104,7 @@ const HomeScreen: React.FC = () => {
           <Text>Seconds</Text>
           <Picker
             selectedValue={seconds}
-            onValueChange={(value) => setSeconds(value)}
+            onValueChange={(value) => handlePickerChange(value, 'seconds')}
             style={{ width: 100 }}
           >
             {[...Array(60).keys()].map((i) => (

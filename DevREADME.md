@@ -20,7 +20,8 @@ Please note that this is my personal setup and what has worked for me, there may
 - yarn add @react-native-async-storage/async-storage
 - yarn add react-native-sound
 - yarn add expo-av
-- yarn add @react-native-picker/picker
+- THIS DID NOT WORK, would not let me select 0 in the picker yarn add @react-native-picker/picker
+- yarn add @react-native-picker/picker@2.2.1
 
 ## Build and Execution
 - yarn start
