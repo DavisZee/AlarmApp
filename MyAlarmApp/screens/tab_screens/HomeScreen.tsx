@@ -8,31 +8,33 @@ const HomeScreen: React.FC = () => {
   const [hours, setHours] = useState(0);
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
-  const [time, setTime] = useState(0); // Initial timer value in seconds
+  const [initialTime, setInitialTime] = useState(0); // Store initial time in seconds based on pickers
+  const [time, setTime] = useState(0); // Actual timer countdown value in seconds
   const [isRunning, setIsRunning] = useState(false);
 
   // Use ref to store the stop sound function
   const stopSoundRef = useRef<(() => void) | null>(null);
 
-  // Update `time` whenever `hours`, `minutes`, or `seconds` change, but only if the timer is not running
+  // Update `initialTime` whenever hours, minutes, or seconds change
   useEffect(() => {
     if (!isRunning) {
-      setTime(hours * 3600 + minutes * 60 + seconds);
+      setInitialTime(hours * 3600 + minutes * 60 + seconds);
     }
   }, [hours, minutes, seconds, isRunning]);
 
   const startTimer = () => {
-    if (!isRunning && time === 0) { // Only reset if timer has finished
-      setTime(hours * 3600 + minutes * 60 + seconds); // Set initial time in seconds
+    if (!isRunning && time === 0) { 
+      // Only set time to initialTime if the timer has not started or has been reset
+      setTime(initialTime);
     }
-    setIsRunning(true);
+    setIsRunning(true); // Start or resume the timer
   };
 
   const pauseTimer = () => setIsRunning(false);
 
   const resetTimer = () => {
     setIsRunning(false);
-    setTime(hours * 3600 + minutes * 60 + seconds); // Reset to selected values
+    setTime(initialTime); // Reset to selected values
     if (stopSoundRef.current) {
       stopSoundRef.current(); // Stop the sound if it's playing
     }
