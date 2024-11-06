@@ -14,10 +14,12 @@ const HomeScreen: React.FC = () => {
   // Use ref to store the stop sound function
   const stopSoundRef = useRef<(() => void) | null>(null);
 
-  // Update `time` whenever `hours`, `minutes`, or `seconds` change
+  // Update `time` whenever `hours`, `minutes`, or `seconds` change, but only if the timer is not running
   useEffect(() => {
-    setTime(hours * 3600 + minutes * 60 + seconds);
-  }, [hours, minutes, seconds]);
+    if (!isRunning) {
+      setTime(hours * 3600 + minutes * 60 + seconds);
+    }
+  }, [hours, minutes, seconds, isRunning]);
 
   const startTimer = () => {
     if (!isRunning && time === 0) { // Only reset if timer has finished
