@@ -1,61 +1,123 @@
-import { Button, Text, View, TouchableOpacity } from 'react-native';
 import React, { useState, useRef } from 'react';
-import { styles, bt_card_styles, timer_styles, timer_button_styles, timer_comp_styles } from '../styles';
+import { View, Text, Button, StyleSheet } from 'react-native';
+import { Picker } from '@react-native-picker/picker';
 import Timer from '../../components/Timer';
+import { styles as importedStyles, bt_card_styles, timer_styles, timer_comp_styles } from '../styles';
 
 const HomeScreen: React.FC = () => {
-  const input = 3; // Initial timer value
-
-  const [time, setTime] = useState(input);
+  const [hours, setHours] = useState(0);
+  const [minutes, setMinutes] = useState(0);
+  const [seconds, setSeconds] = useState(0);
+  const [time, setTime] = useState(hours * 3600 + minutes * 60 + seconds); // initial timer in seconds
   const [isRunning, setIsRunning] = useState(false);
+
+  // Use ref to store the stop sound function
   const stopSoundRef = useRef<(() => void) | null>(null);
 
-  const startTimer = () => setIsRunning(true);
+  const startTimer = () => {
+    setTime(hours * 3600 + minutes * 60 + seconds); // Set initial time in seconds
+    setIsRunning(true);
+  };
+
   const pauseTimer = () => setIsRunning(false);
+
   const resetTimer = () => {
     setIsRunning(false);
-    setTime(input);
+    setTime(hours * 3600 + minutes * 60 + seconds); // Reset to selected values
     if (stopSoundRef.current) {
-      stopSoundRef.current();
+      stopSoundRef.current(); // Stop the sound if it's playing
     }
   };
 
+  // Function to set the stop sound function
   const setStopSoundFunction = (stopFunction: () => void) => {
     stopSoundRef.current = stopFunction;
   };
 
   return (
-    <View style={styles.container}>
-      <View style={bt_card_styles.card}>
-        <View style={bt_card_styles.cardHeader}>
-          <Text style={bt_card_styles.headerText}>Connected Device:</Text>
+    <View style={importedStyles.container}>
+      <Text style={styles.header}>Set Timer</Text>
+
+      {/* Scrollable Pickers for Hours, Minutes, and Seconds */}
+      <View style={styles.pickerContainer}>
+        <View style={styles.pickerItem}>
+          <Text>Hours</Text>
+          <Picker
+            selectedValue={hours}
+            onValueChange={(value) => setHours(value)}
+            style={{ width: 100 }}
+          >
+            {[...Array(24).keys()].map((i) => (
+              <Picker.Item key={i} label={`${i}`} value={i} />
+            ))}
+          </Picker>
         </View>
-        <View style={bt_card_styles.cardBody}>
-          <Text style={bt_card_styles.bodyText}>MyAirPods</Text>
+
+        <View style={styles.pickerItem}>
+          <Text>Minutes</Text>
+          <Picker
+            selectedValue={minutes}
+            onValueChange={(value) => setMinutes(value)}
+            style={{ width: 100 }}
+          >
+            {[...Array(60).keys()].map((i) => (
+              <Picker.Item key={i} label={`${i}`} value={i} />
+            ))}
+          </Picker>
+        </View>
+
+        <View style={styles.pickerItem}>
+          <Text>Seconds</Text>
+          <Picker
+            selectedValue={seconds}
+            onValueChange={(value) => setSeconds(value)}
+            style={{ width: 100 }}
+          >
+            {[...Array(60).keys()].map((i) => (
+              <Picker.Item key={i} label={`${i}`} value={i} />
+            ))}
+          </Picker>
         </View>
       </View>
 
-      <View style={timer_styles.card}>
-        <Timer
-          time={time}
-          isRunning={isRunning}
-          setIsRunning={setIsRunning}
-          setTime={setTime}
-          onStopSound={setStopSoundFunction}
-        />
-      </View>
+      {/* Display Timer */}
+      <Timer
+        time={time}
+        isRunning={isRunning}
+        setIsRunning={setIsRunning}
+        setTime={setTime}
+        onStopSound={setStopSoundFunction}
+      />
 
-      <View style={timer_styles.buttonContainer}>
+      {/* Timer Control Buttons */}
+      <View style={styles.buttonContainer}>
         <Button title="Start" onPress={startTimer} />
         <Button title="Pause" onPress={pauseTimer} />
         <Button title="Reset" onPress={resetTimer} />
       </View>
-
-      <View>
-        <Text style={timer_comp_styles.statusText}>Status: {isRunning ? 'Running' : 'Paused'}</Text>
-      </View>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  header: {
+    fontSize: 20,
+    marginBottom: 20,
+  },
+  pickerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 20,
+  },
+  pickerItem: {
+    alignItems: 'center',
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    width: '100%',
+    marginTop: 20,
+  },
+});
 
 export default HomeScreen;
