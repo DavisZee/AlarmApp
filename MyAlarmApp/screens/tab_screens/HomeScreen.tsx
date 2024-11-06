@@ -17,8 +17,12 @@ const HomeScreen: React.FC = () => {
 
   // Update `initialTime` whenever hours, minutes, or seconds change
   useEffect(() => {
+    const newInitialTime = hours * 3600 + minutes * 60 + seconds;
+    setInitialTime(newInitialTime);
+
+    // Update `time` if the timer is not currently running
     if (!isRunning) {
-      setInitialTime(hours * 3600 + minutes * 60 + seconds);
+      setTime(newInitialTime);
     }
   }, [hours, minutes, seconds, isRunning]);
 
