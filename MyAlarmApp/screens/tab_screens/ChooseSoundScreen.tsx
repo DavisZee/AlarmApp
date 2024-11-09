@@ -21,7 +21,7 @@ const ChooseSoundScreen = () => {
 
     return (
         <View style={styles.container}>
-            <Text>This is my Sound Options Screen</Text>
+            <Text>Select ringtone for timer below</Text>
 
             <TouchableOpacity
                 style={styles.button}
