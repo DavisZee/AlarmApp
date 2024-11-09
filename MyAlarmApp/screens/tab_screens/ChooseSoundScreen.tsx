@@ -27,21 +27,21 @@ const ChooseSoundScreen = () => {
                 style={styles.button}
                 onPress={() => saveSoundPreference(soundIdentifiers.alarmSound1)}
             >
-                <Text style={styles.buttonText}>Alarm Sound 1</Text>
+                <Text style={styles.buttonText}>Classic Beeping</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
                 style={styles.button}
                 onPress={() => saveSoundPreference(soundIdentifiers.alarmSound2)}
             >
-                <Text style={styles.buttonText}>Alarm Sound 2</Text>
+                <Text style={styles.buttonText}>Old Telephone</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
                 style={styles.button}
                 onPress={() => saveSoundPreference(soundIdentifiers.alarmSound3)}
             >
-                <Text style={styles.buttonText}>Alarm Sound 3</Text>
+                <Text style={styles.buttonText}>Ducks</Text>
             </TouchableOpacity>
         </View>
     );
