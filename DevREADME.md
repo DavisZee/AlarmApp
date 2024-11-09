@@ -1,6 +1,6 @@
 # Developer Setup
 
-By Davis Zhong <br>
+By Nicola Mihai, Aylin Onalan, and Davis Zhong <br>
 
 Please note that this is my personal setup and what has worked for me, there may be updates and changes to dependencies in the future.
 
@@ -22,7 +22,6 @@ Please note that this is my personal setup and what has worked for me, there may
 - yarn add expo-av
 - THIS DID NOT WORK, would not let me select 0 in the picker yarn add @react-native-picker/picker
 - yarn add @react-native-picker/picker@2.2.1
-- yarn add @react-native-community/slider
 
 ## Build and Execution
 - yarn start
