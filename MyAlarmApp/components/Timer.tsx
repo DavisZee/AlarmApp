@@ -5,13 +5,13 @@ import { Audio } from 'expo-av';
 import { timer_comp_styles } from '../screens/styles';
 
 import alarmTestFile from '../assets/alarmTestFile.mp3';
-import alarmTestFile2 from '../assets/alarmTestFile2.mp3';
-import alarmTestFile3 from '../assets/alarmTestFile3.mp3';
+import oldTelephone from '../assets/oldTelephone.mp3';
+import duck from '../assets/duck.mp3';
 
 const soundMappings: { [key: string]: any } = {
     alarmSound1: alarmTestFile,
-    alarmSound2: alarmTestFile2,
-    alarmSound3: alarmTestFile3,
+    oldTelephone: oldTelephone,
+    duck: duck,
 };
 
 interface TimerProps {

@@ -5,8 +5,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 // Sound identifiers
 const soundIdentifiers = {
     alarmSound1: 'alarmSound1',
-    alarmSound2: 'alarmSound2',
-    alarmSound3: 'alarmSound3',
+    oldTelephone: 'oldTelephone',
+    duck: 'duck',
 };
 
 const ChooseSoundScreen = () => {
@@ -32,14 +32,14 @@ const ChooseSoundScreen = () => {
 
             <TouchableOpacity
                 style={styles.button}
-                onPress={() => saveSoundPreference(soundIdentifiers.alarmSound2)}
+                onPress={() => saveSoundPreference(soundIdentifiers.oldTelephone)}
             >
                 <Text style={styles.buttonText}>Old Telephone</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
                 style={styles.button}
-                onPress={() => saveSoundPreference(soundIdentifiers.alarmSound3)}
+                onPress={() => saveSoundPreference(soundIdentifiers.duck)}
             >
                 <Text style={styles.buttonText}>Ducks</Text>
             </TouchableOpacity>
