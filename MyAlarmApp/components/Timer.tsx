@@ -36,20 +36,13 @@ const Timer: React.FC<TimerProps> = ({ time, isRunning, setIsRunning, setTime, o
 
             if (identifier && soundMappings[identifier]) {
                 const { sound: playbackObject } = await Audio.Sound.createAsync(
-                    soundMappings[identifier]
+                    soundMappings[identifier],
+                    { isLooping: true } // Set the sound to loop continuously
                 );
 
-                // Set the volume and then play the sound
+                // Set the volume and then play the sound in a loop
                 await playbackObject.setVolumeAsync(volume);
                 await playbackObject.playAsync();
-
-                playbackObject.setOnPlaybackStatusUpdate((status) => {
-                    if (status.isLoaded && status.didJustFinish) {
-                        playbackObject.unloadAsync();
-                        setIsPlaying(false);
-                        setSound(null);
-                    }
-                });
 
                 setSound(playbackObject);
                 setIsPlaying(true);
