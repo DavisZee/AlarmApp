@@ -1,12 +1,9 @@
-// Timer.tsx
-
 import React, { useState, useEffect, useCallback } from 'react';
 import { View, Text } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Audio } from 'expo-av';
 import { timer_comp_styles } from '../screens/styles';
 
-// Import sound files
 import alarmTestFile from '../assets/alarmTestFile.mp3';
 import alarmTestFile2 from '../assets/alarmTestFile2.mp3';
 import alarmTestFile3 from '../assets/alarmTestFile3.mp3';
@@ -27,30 +24,35 @@ interface TimerProps {
 
 const Timer: React.FC<TimerProps> = ({ time, isRunning, setIsRunning, setTime, onStopSound }) => {
     const [sound, setSound] = useState<Audio.Sound | null>(null);
-    const [isPlaying, setIsPlaying] = useState(false); // Track if the sound is currently playing
+    const [isPlaying, setIsPlaying] = useState(false);
 
     const playSound = useCallback(async () => {
         try {
-            if (isPlaying) return; // Prevent playing if already playing
+            if (isPlaying) return;
 
             const identifier = await AsyncStorage.getItem("userRingtonePreference");
+            const storedVolume = await AsyncStorage.getItem("alarmVolume");
+            const volume = storedVolume ? parseFloat(storedVolume) : 1; // Default to max volume if not set
+
             if (identifier && soundMappings[identifier]) {
                 const { sound: playbackObject } = await Audio.Sound.createAsync(
-                    soundMappings[identifier],
-                    { shouldPlay: true } // Auto-play once loaded
+                    soundMappings[identifier]
                 );
-                
+
+                // Set the volume and then play the sound
+                await playbackObject.setVolumeAsync(volume);
+                await playbackObject.playAsync();
+
                 playbackObject.setOnPlaybackStatusUpdate((status) => {
                     if (status.isLoaded && status.didJustFinish) {
-                        // Unload sound when finished
                         playbackObject.unloadAsync();
                         setIsPlaying(false);
                         setSound(null);
                     }
                 });
-                
+
                 setSound(playbackObject);
-                setIsPlaying(true); // Mark as playing once sound is fully loaded
+                setIsPlaying(true);
             } else {
                 console.warn('Sound identifier not found or sound not mapped.');
             }
@@ -62,25 +64,22 @@ const Timer: React.FC<TimerProps> = ({ time, isRunning, setIsRunning, setTime, o
     const stopSound = useCallback(async () => {
         if (sound && isPlaying) {
             try {
-                // Check if the sound is loaded before stopping
                 const status = await sound.getStatusAsync();
                 if (status.isLoaded) {
                     await sound.stopAsync();
                     await sound.unloadAsync();
-                    setIsPlaying(false); // Reset playing status
-                    setSound(null); // Clear sound reference
+                    setIsPlaying(false);
+                    setSound(null);
                 }
             } catch (error) {
                 console.warn('Sound was not loaded or could not be stopped.', error);
             }
         }
     }, [sound, isPlaying]);
-    
 
     useEffect(() => {
         let interval: NodeJS.Timeout | undefined;
 
-        // Pass stopSound function to HomeScreen via callback
         onStopSound(stopSound);
 
         if (isRunning && time > 0) {
@@ -101,7 +100,7 @@ const Timer: React.FC<TimerProps> = ({ time, isRunning, setIsRunning, setTime, o
 
         return () => {
             if (interval) clearInterval(interval);
-            stopSound(); // Stop and unload sound when component unmounts
+            stopSound();
         };
     }, [isRunning, time, setIsRunning, setTime, onStopSound, playSound, stopSound]);
 
