@@ -150,3 +150,39 @@ Justification: Saving alarms and user settings locally ensures that alarms remai
 Value Delivered: Dependability
 Justification: Background operation ensures that alarms go off even if the app isn’t actively open, which is essential for alarms to be reliable. The application is able to provide a seamless experience, preserving the 
 application's state and enhancing its utility as a daily-use app that can be left running without needing constant user intervention.
+
+## Remaining Work For Beta Phase
+As we approach the Beta phase of the application, there are several key tasks to complete to ensure the product is ready for real-world testing and feedback. These tasks will help us refine the app, improve its performance, and identify areas for enhancement before the final release.
+
+### 1. Address Small Logic Errors and Boundary Settings for Timer Time Setting
+
+- **Objective**: Ensure the timer feature works flawlessly across all edge cases and user inputs.
+- **Actions**:
+  - Review and correct any logic errors within the timer time-setting functionality.
+  - Test boundary conditions (e.g., minimum and maximum allowable time, invalid inputs).
+  - Verify that the app gracefully handles user interactions that exceed time limits or input restrictions.
+  
+### 2. Test Application Alarm Features on Various Bluetooth Devices
+
+- **Objective**: Ensure reliable functionality across different Bluetooth devices.
+- **Actions**:
+  - Conduct tests to confirm that alarm sounds play correctly through a variety of Bluetooth audio devices (e.g., headphones, earbuds).
+  - Check for compatibility with multiple brands and models of Bluetooth devices to ensure wide accessibility and usability.
+
+### 4. Prepare Application for Beta User Testing
+
+- **Objective**: Prepare the app for beta testers to evaluate its usability, identify issues, and provide valuable feedback.
+- **Actions**:
+  - **Finalize User Flow**: Ensure that all user flows, particularly for setting alarms, configuring preferences, and managing notifications, are intuitive.
+  - **Testing for Happy Paths**: Focus on identifying the "happy paths" to ensure that users can easily achieve their goals without encountering obstacles.
+  - **Identify Potential Issues**: Provide beta users with specific areas to test (e.g., setting and receiving alarms, Bluetooth connectivity, etc.) to identify any problems, crashes, or performance issues.
+  - **Collect Feedback**: Set up a system for gathering and analyzing feedback from beta users, including bug reports, usability concerns, and feature requests.
+  - **Focus on Usability**: Pay particular attention to user experience, ensuring that the interface is intuitive, the design is accessible, and the alarm settings are straightforward to configure.
+
+### 4. Prepare Documentation for Beta Testers
+
+- **Objective**: Provide clear guidance for beta testers to ensure smooth participation in the testing phase.
+- **Actions**:
+  - **Create Onboarding Material**: Prepare a short user manual or onboarding tutorial for testers, outlining key features and instructions for providing feedback.
+  - **Test Scenarios**: Provide testers with a list of test scenarios, such as setting alarms, connecting to Bluetooth, and interacting with notifications, to ensure comprehensive testing.
+
