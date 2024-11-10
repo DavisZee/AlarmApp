@@ -24,5 +24,9 @@ Please note that this is my personal setup and what has worked for me, there may
 - yarn add @react-native-picker/picker@2.2.1
 - yarn add react-native-vector-icons
 
+## Single Line Dependencies Install
+
+yarn add @react-navigation/native react-native-screens react-native-safe-area-context @react-navigation/native-stack @react-native-community/slider @react-navigation/bottom-tabs @react-native-async-storage/async-storage react-native-sound expo-av @react-native-picker/picker@2.2.1 react-native-vector-icons
+
 ## Build and Execution
 - yarn start
