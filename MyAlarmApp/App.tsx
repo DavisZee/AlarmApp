@@ -5,7 +5,7 @@ import TabNavigator from './screens/TabNavigator';
 //import SecondTestScreen from './screens/SecondTestScreen';
 import { AppStateProvider } from './components/AppStateManager';
 import { enableScreens } from 'react-native-screens';
-enableScreens();
+//enableScreens();
 
 
 const Stack = createNativeStackNavigator();
