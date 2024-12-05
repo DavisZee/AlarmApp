@@ -30,7 +30,7 @@ const HomeScreen: React.FC = () => {
     type: 'hours' | 'minutes' | 'seconds'
   ) => {
     console.log(`Picker selection made - ${type}: ${value}`);
-    
+  
     if (type === 'hours') {
       setHours(value);
     } else if (type === 'minutes') {
@@ -38,6 +38,8 @@ const HomeScreen: React.FC = () => {
     } else if (type === 'seconds') {
       setSeconds(value);
     }
+  
+    resetTimer(); // Automatically reset the timer when a change is made
   };
 
   const startTimer = () => {
