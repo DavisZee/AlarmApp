@@ -1,19 +1,20 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { View, Text, Button, StyleSheet } from 'react-native';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
+import { View, Text, Button, StyleSheet, Modal, TouchableOpacity } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import Timer from '../../components/Timer';
 import { styles as importedStyles } from '../styles';
+import { home_popup_styles, bt_card_styles } from '../styles';
 
 const HomeScreen: React.FC = () => {
   const [hours, setHours] = useState(0);
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
-
   const [initialTime, setInitialTime] = useState(0);
   const [time, setTime] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
   const [wasPaused, setWasPaused] = useState(false);
 
+  const [showPopup, setShowPopup] = useState(false); // State for controlling popup visibility
   const stopSoundRef = useRef<(() => void) | null>(null);
 
   useEffect(() => {
@@ -25,22 +26,25 @@ const HomeScreen: React.FC = () => {
     }
   }, [hours, minutes, seconds, isRunning, wasPaused]);
 
-  const handlePickerChange = (
-    value: number,
-    type: 'hours' | 'minutes' | 'seconds'
-  ) => {
-    console.log(`Picker selection made - ${type}: ${value}`);
-  
-    if (type === 'hours') {
-      setHours(value);
-    } else if (type === 'minutes') {
-      setMinutes(value);
-    } else if (type === 'seconds') {
-      setSeconds(value);
-    }
-  
-    resetTimer(); // Automatically reset the timer when a change is made
-  };
+  const handlePickerChange = useCallback(
+    (value: number, type: 'hours' | 'minutes' | 'seconds') => {
+      console.log(`Picker selection made - ${type}: ${value}`);
+
+      if (type === 'hours') {
+        setHours(value);
+      } else if (type === 'minutes') {
+        setMinutes(value);
+      } else if (type === 'seconds') {
+        setSeconds(value);
+      }
+
+      // Automatically reset the timer when a change is made
+      setIsRunning(false);
+      setWasPaused(false);
+      setTime(value * 3600 + minutes * 60 + seconds); // Update time immediately based on new value
+    },
+    [minutes, seconds]
+  );
 
   const startTimer = () => {
     if (!isRunning) {
@@ -70,8 +74,23 @@ const HomeScreen: React.FC = () => {
     stopSoundRef.current = stopFunction;
   };
 
+  const handlePopupClose = () => setShowPopup(false);
+
   return (
+    
     <View style={importedStyles.container}>
+      {/* Card component */}
+      <View style={bt_card_styles.card}>
+        
+        <View style={bt_card_styles.cardHeader}>
+          <Text style={bt_card_styles.headerText}>Connected Device:</Text>
+        </View>
+
+        {/* Card body */}
+        <View style={bt_card_styles.cardBody}>
+          <Text style={bt_card_styles.bodyText}>MyAirPods</Text>
+        </View>
+      </View>
       <Text style={styles.header}>Set Timer</Text>
 
       {/* Scrollable Pickers for Hours, Minutes, and Seconds */}
@@ -131,6 +150,28 @@ const HomeScreen: React.FC = () => {
         <Button title="Pause" onPress={pauseTimer} />
         <Button title="Reset" onPress={resetTimer} />
       </View>
+
+      {/* Popup Button */}
+      <Button title="Pop Test" onPress={() => setShowPopup(true)} />
+
+      {/* Popup Modal */}
+      <Modal
+        transparent={true}
+        visible={showPopup}
+        animationType="fade"
+        onRequestClose={handlePopupClose}
+      >
+        <View style={home_popup_styles.modalOverlay}>
+          <View style={home_popup_styles.popupCard}>
+            <Text style={home_popup_styles.popupText}>No Bluetooth Device Connected! Proceed?</Text>
+            <TouchableOpacity onPress={handlePopupClose}>
+              <View style={home_popup_styles.closeButton}>
+                <Text style={home_popup_styles.closeButtonText}>Yes</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
