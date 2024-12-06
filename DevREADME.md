@@ -23,6 +23,9 @@ Please note that this is my personal setup and what has worked for me, there may
 - Must use this version of picker:
 - yarn add @react-native-picker/picker@2.2.1
 - yarn add react-native-vector-icons
+- expo install expo-notifications expo-task-manager
+- yarn add react-native-background-timer
+
 
 ## Single Line Dependencies Install
 
