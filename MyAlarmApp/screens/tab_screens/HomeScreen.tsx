@@ -15,6 +15,8 @@ const HomeScreen: React.FC = () => {
   const [wasPaused, setWasPaused] = useState(false);
 
   const [showPopup, setShowPopup] = useState(false); // State for controlling popup visibility
+  const [deviceConnected, setDeviceConnected] = useState(false); // Device connection flag
+  const [ignoreDevice, setIgnoreDevice] = useState(false);
   const stopSoundRef = useRef<(() => void) | null>(null);
 
   useEffect(() => {
@@ -47,21 +49,29 @@ const HomeScreen: React.FC = () => {
   );
 
   const startTimer = () => {
-    if (!isRunning) {
-      if (!wasPaused) {
-        setTime(initialTime);
+    if (deviceConnected || ignoreDevice) {
+      // If the device is connected, start the timer immediately
+      if (!isRunning) {
+        if (!wasPaused) {
+          setTime(initialTime);
+        }
+        setIsRunning(true);
+        setWasPaused(false);
       }
-      setIsRunning(true);
-      setWasPaused(false);
+    } else {
+      // If the device is not connected, show the popup
+      setShowPopup(true);
     }
   };
 
   const pauseTimer = () => {
     setIsRunning(false);
     setWasPaused(true);
+    setIgnoreDevice(false);
   };
 
   const resetTimer = () => {
+    setIgnoreDevice(false);
     setIsRunning(false);
     setWasPaused(false);
     setTime(initialTime);
@@ -76,19 +86,25 @@ const HomeScreen: React.FC = () => {
 
   const handlePopupClose = () => setShowPopup(false);
 
+  const handlePopupYes = () => {
+    setIgnoreDevice(true);
+    setShowPopup(false);
+    startTimer();
+  };
+
+  const handlePopupNo = () => setShowPopup(false);
+
   return (
-    
     <View style={importedStyles.container}>
       {/* Card component */}
       <View style={bt_card_styles.card}>
-        
         <View style={bt_card_styles.cardHeader}>
           <Text style={bt_card_styles.headerText}>Connected Device:</Text>
         </View>
 
         {/* Card body */}
         <View style={bt_card_styles.cardBody}>
-          <Text style={bt_card_styles.bodyText}>MyAirPods</Text>
+          <Text style={bt_card_styles.bodyText}>None</Text>
         </View>
       </View>
       <Text style={styles.header}>Set Timer</Text>
@@ -151,9 +167,6 @@ const HomeScreen: React.FC = () => {
         <Button title="Reset" onPress={resetTimer} />
       </View>
 
-      {/* Popup Button */}
-      <Button title="Pop Test" onPress={() => setShowPopup(true)} />
-
       {/* Popup Modal */}
       <Modal
         transparent={true}
@@ -164,11 +177,18 @@ const HomeScreen: React.FC = () => {
         <View style={home_popup_styles.modalOverlay}>
           <View style={home_popup_styles.popupCard}>
             <Text style={home_popup_styles.popupText}>No Bluetooth Device Connected! Proceed?</Text>
-            <TouchableOpacity onPress={handlePopupClose}>
-              <View style={home_popup_styles.closeButton}>
-                <Text style={home_popup_styles.closeButtonText}>Yes</Text>
-              </View>
-            </TouchableOpacity>
+            <View style={home_popup_styles.buttonContainer}>
+              <TouchableOpacity onPress={handlePopupYes}>
+                <View style={home_popup_styles.button}>
+                  <Text style={home_popup_styles.buttonText}>Yes</Text>
+                </View>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={handlePopupNo}>
+                <View style={home_popup_styles.button}>
+                  <Text style={home_popup_styles.buttonText}>No</Text>
+                </View>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
       </Modal>

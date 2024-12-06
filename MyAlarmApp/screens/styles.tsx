@@ -185,7 +185,7 @@ export const home_popup_styles = StyleSheet.create({
   },
   buttonContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'space-evenly', // Adjusted to space buttons evenly
     width: '100%',
     marginTop: 20,
   },
@@ -212,6 +212,15 @@ export const home_popup_styles = StyleSheet.create({
     borderRadius: 5,
   },
   closeButtonText: {
+    color: 'white',
+    fontSize: 16,
+  },
+  button: {
+    padding: 10,
+    borderRadius: 5,
+    backgroundColor: '#007BFF', // Button background color
+  },
+  buttonText: {
     color: 'white',
     fontSize: 16,
   },
