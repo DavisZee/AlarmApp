@@ -1,0 +1,1 @@
+updates were merged by accident but commits show updates for simple prototype. other parts of the hw appended to readme file.

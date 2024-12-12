@@ -1,63 +1,68 @@
+import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import React from 'react';
 
-
-const ChooseSoundScreen = () => {
-  const saveSoundPath = async (path: string) => {
-    try {
-      await AsyncStorage.setItem("userRingtonePreference", path);
-      console.log(`Sound path saved as user preference: ${path}`);
-    } catch (error) {
-      console.error('Error saving sound path to AsyncStorage', error);
-    }
-  };
-
-  return (
-    <View style={styles.container}>
-      <Text>This is my Sound Options Screen</Text>
-
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => saveSoundPath('../assets/sound.mp3')}
-      >
-        <Text style={styles.buttonText}>Alarm Sound 1</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => saveSoundPath('../assets/sound.mp3')}
-      >
-        <Text style={styles.buttonText}>Alarm Sound 2</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => saveSoundPath('../assets/sound.mp3')}
-      >
-        <Text style={styles.buttonText}>Alarm Sound 3</Text>
-      </TouchableOpacity>
-    </View>
-  );
+// Sound identifiers
+const soundIdentifiers = {
+    alarmSound1: 'alarmSound1',
+    oldTelephone: 'oldTelephone',
+    duck: 'duck',
 };
 
+const ChooseSoundScreen = () => {
+    const saveSoundPreference = async (identifier: string) => {
+        try {
+            await AsyncStorage.setItem("userRingtonePreference", identifier);
+            console.log(`Sound preference saved: ${identifier}`);
+        } catch (error) {
+            console.error('Error saving sound preference to AsyncStorage', error);
+        }
+    };
+
+    return (
+        <View style={styles.container}>
+            <Text>Select ringtone for timer below</Text>
+
+            <TouchableOpacity
+                style={styles.button}
+                onPress={() => saveSoundPreference(soundIdentifiers.alarmSound1)}
+            >
+                <Text style={styles.buttonText}>Classic Beeping</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+                style={styles.button}
+                onPress={() => saveSoundPreference(soundIdentifiers.oldTelephone)}
+            >
+                <Text style={styles.buttonText}>Old Telephone</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+                style={styles.button}
+                onPress={() => saveSoundPreference(soundIdentifiers.duck)}
+            >
+                <Text style={styles.buttonText}>Ducks</Text>
+            </TouchableOpacity>
+        </View>
+    );
+};
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  button: {
-    marginTop: 20,
-    padding: 10,
-    backgroundColor: '#59F8BB', // Button color
-    borderRadius: 5
-  },
-  buttonText: {
-    color: '#000000', // Text color
-    fontSize: 18,
-  },
+    container: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    button: {
+        marginTop: 20,
+        padding: 10,
+        backgroundColor: '#59F8BB', // Button color
+        borderRadius: 5,
+    },
+    buttonText: {
+        color: '#000000', // Text color
+        fontSize: 18,
+    },
 });
 
 export default ChooseSoundScreen;

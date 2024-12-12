@@ -1,82 +1,157 @@
-import { Button, TextInput, Text, View, TouchableOpacity } from 'react-native';
-import React, { useState } from 'react';
-import { styles, bt_card_styles, timer_styles, timer_button_styles, timer_comp_styles } from '../styles'; // import path for styles
-import Timer from '../../components/Timer'; 
-
+import React, { useState, useRef, useEffect } from 'react';
+import { View, Text, Button, StyleSheet } from 'react-native';
+import { Picker } from '@react-native-picker/picker';
+import Timer from '../../components/Timer';
+import { styles as importedStyles } from '../styles';
 
 const HomeScreen: React.FC = () => {
-  // temp test value
-  const input = 3;
+  const [hours, setHours] = useState(0);
+  const [minutes, setMinutes] = useState(0);
+  const [seconds, setSeconds] = useState(0);
 
-
-  const [time, setTime] = useState(input); // initial timer in seconds
+  const [initialTime, setInitialTime] = useState(0);
+  const [time, setTime] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
-  
-  const startTimer = () => setIsRunning(true);
-  const pauseTimer = () => setIsRunning(false);
+  const [wasPaused, setWasPaused] = useState(false);
+
+  const stopSoundRef = useRef<(() => void) | null>(null);
+
+  useEffect(() => {
+    const newInitialTime = hours * 3600 + minutes * 60 + seconds;
+    setInitialTime(newInitialTime);
+
+    if (!isRunning && !wasPaused) {
+      setTime(newInitialTime);
+    }
+  }, [hours, minutes, seconds, isRunning, wasPaused]);
+
+  const handlePickerChange = (
+    value: number,
+    type: 'hours' | 'minutes' | 'seconds'
+  ) => {
+    console.log(`Picker selection made - ${type}: ${value}`);
+    
+    if (type === 'hours') {
+      setHours(value);
+    } else if (type === 'minutes') {
+      setMinutes(value);
+    } else if (type === 'seconds') {
+      setSeconds(value);
+    }
+  };
+
+  const startTimer = () => {
+    if (!isRunning) {
+      if (!wasPaused) {
+        setTime(initialTime);
+      }
+      setIsRunning(true);
+      setWasPaused(false);
+    }
+  };
+
+  const pauseTimer = () => {
+    setIsRunning(false);
+    setWasPaused(true);
+  };
+
   const resetTimer = () => {
     setIsRunning(false);
-    setTime(input); // reset to initial value
+    setWasPaused(false);
+    setTime(initialTime);
+    if (stopSoundRef.current) {
+      stopSoundRef.current();
+    }
+  };
+
+  const setStopSoundFunction = (stopFunction: () => void) => {
+    stopSoundRef.current = stopFunction;
   };
 
   return (
-    <View style={styles.container}>
-      {/* Card component */}
-      <View style={bt_card_styles.card}>
-        
-        <View style={bt_card_styles.cardHeader}>
-          <Text style={bt_card_styles.headerText}>Connected Device:</Text>
+    <View style={importedStyles.container}>
+      <Text style={styles.header}>Set Timer</Text>
+
+      {/* Scrollable Pickers for Hours, Minutes, and Seconds */}
+      <View style={styles.pickerContainer}>
+        <View style={styles.pickerItem}>
+          <Text>Hours</Text>
+          <Picker
+            selectedValue={hours}
+            onValueChange={(value) => handlePickerChange(value, 'hours')}
+            style={{ width: 100 }}
+          >
+            {[...Array(24).keys()].map((i) => (
+              <Picker.Item key={i} label={`${i}`} value={i} />
+            ))}
+          </Picker>
         </View>
 
-        {/* Card body */}
-        <View style={bt_card_styles.cardBody}>
-          <Text style={bt_card_styles.bodyText}>MyAirPods</Text>
+        <View style={styles.pickerItem}>
+          <Text>Minutes</Text>
+          <Picker
+            selectedValue={minutes}
+            onValueChange={(value) => handlePickerChange(value, 'minutes')}
+            style={{ width: 100 }}
+          >
+            {[...Array(60).keys()].map((i) => (
+              <Picker.Item key={i} label={`${i}`} value={i} />
+            ))}
+          </Picker>
+        </View>
+
+        <View style={styles.pickerItem}>
+          <Text>Seconds</Text>
+          <Picker
+            selectedValue={seconds}
+            onValueChange={(value) => handlePickerChange(value, 'seconds')}
+            style={{ width: 100 }}
+          >
+            {[...Array(60).keys()].map((i) => (
+              <Picker.Item key={i} label={`${i}`} value={i} />
+            ))}
+          </Picker>
         </View>
       </View>
-      
-      {/* Card component */}
-      <View style={timer_styles.card}>
-        {/* header */}
-        <View style={timer_button_styles.button_border}>
-          {/* Triangle Buttons Container */}
-          <View style={timer_button_styles.triangleContainer}>
-            <TouchableOpacity style={timer_button_styles.tri_up_button} onPress={() => console.log("Button 1 pressed")} />
-            <TouchableOpacity style={timer_button_styles.tri_up_button} onPress={() => console.log("Button 2 pressed")} />
-            <TouchableOpacity style={timer_button_styles.tri_up_button} onPress={() => console.log("Button 3 pressed")} />
-          </View>
-        </View>
 
-        {/* alarm body */}
-        <View>
-          <Timer time={time} isRunning={isRunning} setIsRunning={setIsRunning} setTime={setTime} />
-        </View>
-        
-        {/* footer */}
-        <View style={timer_button_styles.button_border}>
-          {/* Triangle Buttons Container */}
-          <View style={timer_button_styles.triangleContainer}>
-            <TouchableOpacity style={timer_button_styles.tri_down_button} onPress={() => console.log("Button 1 pressed")} />
-            <TouchableOpacity style={timer_button_styles.tri_down_button} onPress={() => console.log("Button 2 pressed")} />
-            <TouchableOpacity style={timer_button_styles.tri_down_button} onPress={() => console.log("Button 3 pressed")} />
-          </View>
-        </View>
-      </View>
+      {/* Display Timer */}
+      <Timer
+        time={time}
+        isRunning={isRunning}
+        setIsRunning={setIsRunning}
+        setTime={setTime}
+        onStopSound={setStopSoundFunction}
+      />
 
-      {/** Timer Control Buttons */}
-      <View style={timer_styles.buttonContainer}>
-        {/* 
-        <TouchableOpacity>
-          <Text>Test</Text>
-        </TouchableOpacity>
-        */}
-        <Button title="Start" onPress={startTimer}/>
+      {/* Timer Control Buttons */}
+      <View style={styles.buttonContainer}>
+        <Button title="Start" onPress={startTimer} />
         <Button title="Pause" onPress={pauseTimer} />
         <Button title="Reset" onPress={resetTimer} />
       </View>
-      <View><Text style={timer_comp_styles.statusText}>Status: {isRunning ? 'Running' : 'Paused'}</Text></View>
-      
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  header: {
+    fontSize: 20,
+    marginBottom: 20,
+  },
+  pickerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 20,
+  },
+  pickerItem: {
+    alignItems: 'center',
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    width: '100%',
+    marginTop: 20,
+  },
+});
 
 export default HomeScreen;
