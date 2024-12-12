@@ -52,11 +52,12 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
+        backgroundColor: '#59F8BB'
     },
     button: {
         marginTop: 20,
         padding: 10,
-        backgroundColor: '#59F8BB', // Button color
+        backgroundColor: '#D9D9D9', // Button color
         borderRadius: 5,
     },
     buttonText: {

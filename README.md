@@ -186,3 +186,6 @@ As we approach the Beta phase of the application, there are several key tasks to
   - **Create Onboarding Material**: Prepare a short user manual or onboarding tutorial for testers, outlining key features and instructions for providing feedback.
   - **Test Scenarios**: Provide testers with a list of test scenarios, such as setting alarms, connecting to Bluetooth, and interacting with notifications, to ensure comprehensive testing.
 
+
+
+

@@ -15,7 +15,7 @@ const HomeScreen: React.FC = () => {
   const [wasPaused, setWasPaused] = useState(false);
 
   const [showPopup, setShowPopup] = useState(false); // State for controlling popup visibility
-  const [deviceConnected, setDeviceConnected] = useState(false); // Device connection flag
+  const [deviceConnected, setDeviceConnected] = useState(true); // Device connection flag
   const [ignoreDevice, setIgnoreDevice] = useState(false);
   const stopSoundRef = useRef<(() => void) | null>(null);
 
@@ -104,7 +104,7 @@ const HomeScreen: React.FC = () => {
 
         {/* Card body */}
         <View style={bt_card_styles.cardBody}>
-          <Text style={bt_card_styles.bodyText}>None</Text>
+          <Text style={bt_card_styles.bodyText}>Connected</Text>
         </View>
       </View>
       <Text style={styles.header}>Set Timer</Text>
