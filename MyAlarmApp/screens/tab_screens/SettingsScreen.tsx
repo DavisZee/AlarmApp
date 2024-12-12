@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Slider from '@react-native-community/slider';
 
@@ -31,8 +31,18 @@ const SettingsScreen: React.FC = () => {
         maximumValue={1}
         value={volume}
         onValueChange={handleVolumeChange}
+        minimumTrackTintColor="black"
+        maximumTrackTintColor="black"
+        thumbTintColor="black"
       />
       <Text style={styles.volumeText}>{Math.round(volume * 100)}%</Text>
+      <TouchableOpacity
+        style={styles.colorBlindButton}
+        onPress={() => {}}
+        activeOpacity={0.6}
+      >
+        <Text style={styles.buttonText}>Color Blind Friendly</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -41,6 +51,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
+    backgroundColor: '#54EAB0',
   },
   label: {
     fontSize: 18,
@@ -53,6 +64,17 @@ const styles = StyleSheet.create({
   volumeText: {
     textAlign: 'center',
     marginTop: 10,
+    fontSize: 16,
+  },
+  colorBlindButton: {
+    marginTop: 20,
+    padding: 10,
+    backgroundColor: '#000',
+    borderRadius: 5,
+  },
+  buttonText: {
+    color: '#FFF',
+    textAlign: 'center',
     fontSize: 16,
   },
 });
